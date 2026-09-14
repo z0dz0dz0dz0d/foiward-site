@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="hr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FOIward trailer</title>
+    <style>
+      :root { --red: #d6092f; --black: #080808; --cream: #f4efe8; --gold: #d7b35a; --white: #fff; }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: var(--cream); color: var(--black); font-family: Arial, Helvetica, sans-serif; min-height: 100vh; padding: 24px; }
+      .shell { display: grid; gap: 18px; margin: 0 auto; max-width: 1240px; }
+      .toolbar { align-items: center; display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; }
+      .brand { color: var(--black); font-size: 1.15rem; font-weight: 950; letter-spacing: -.02em; }
+      .brand span { color: var(--red); }
+      .controls { display: flex; gap: 10px; }
+      button, .button { background: var(--red); border: 1px solid var(--red); color: var(--white); cursor: pointer; display: inline-flex; font-weight: 950; padding: 12px 16px; text-decoration: none; }
+      button.secondary, .button.secondary { background: var(--black); border-color: var(--black); }
+      .stage { aspect-ratio: 16 / 9; background: var(--black); box-shadow: 0 28px 70px rgba(20,20,20,.16); overflow: hidden; position: relative; width: 100%; }
+      .scene { animation: trailer 42s linear infinite; inset: 0; opacity: 0; position: absolute; }
+      .scene img { filter: brightness(.64) contrast(1.08) saturate(.92); height: 100%; object-fit: cover; transform: scale(1.08); width: 100%; }
+      .scene::after { background: linear-gradient(90deg, rgba(0,0,0,.84), rgba(0,0,0,.18) 62%, rgba(0,0,0,.62)); content: ""; inset: 0; position: absolute; }
+      .copy { bottom: clamp(34px, 6vw, 80px); left: clamp(34px, 6vw, 90px); max-width: 800px; position: absolute; z-index: 2; }
+      .kicker { color: var(--gold); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: clamp(.8rem, 1.2vw, 1rem); font-weight: 950; margin: 0 0 12px; text-transform: uppercase; }
+      h1 { color: var(--white); font-size: clamp(3rem, 7.6vw, 7rem); letter-spacing: -.05em; line-height: .88; margin: 0; }
+      p { color: rgba(255,255,255,.84); font-size: clamp(1.05rem, 1.7vw, 1.45rem); line-height: 1.35; margin: 18px 0 0; max-width: 760px; }
+      .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+      .chips span { background: rgba(255,255,255,.92); color: var(--red); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .78rem; font-weight: 950; padding: 9px 12px; }
+      .scene:nth-child(1) { animation-delay: 0s; }
+      .scene:nth-child(2) { animation-delay: 7s; }
+      .scene:nth-child(3) { animation-delay: 14s; }
+      .scene:nth-child(4) { animation-delay: 21s; }
+      .scene:nth-child(5) { animation-delay: 28s; }
+      .scene:nth-child(6) { animation-delay: 35s; }
+      @keyframes trailer { 0% { opacity: 0; } 3% { opacity: 1; } 14% { opacity: 1; } 17% { opacity: 0; } 100% { opacity: 0; } }
+      .note { color: #575757; font-size: .94rem; line-height: 1.45; margin: 0; }
+      canvas { display: none; }
+      @media (max-width: 720px) { body { padding: 14px; } .controls { width: 100%; } button, .button { flex: 1; justify-content: center; } }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <div class="toolbar">
+        <div class="brand"><span>FOI</span>ward trailer</div>
+        <div class="controls">
+          <button class="secondary" type="button" id="restart">Ponovi</button>
+          <button type="button" id="record">Izvezi WebM</button>
+          <a class="button secondary" href="assets/trailer/foiward-trailer-preview.gif">GIF preview</a>
+        </div>
+      </div>
+      <section class="stage" id="stage" aria-label="FOIward trailer preview">
+        <article class="scene"><img src="assets/hero-lab.jpg" alt="" /><div class="copy"><p class="kicker">FOIward centar</p><h1>Centar u kojem ideje kreću naprijed.</h1><p>Znanje, mentorstvo, prostori i tehnologija za najraniju fazu razvoja ideje.</p></div></article>
+        <article class="scene"><img src="assets/content/foiward-approach-idea-tech.jpg" alt="" /><div class="copy"><p class="kicker">Što je predinkubacija?</p><h1>Od početne ideje do odluke.</h1><p>Dovoljna je ideja, istraživački rezultat ili problem koji želiš riješiti.</p><div class="chips"><span>Otkrij</span><span>Istraži</span><span>Provjeri</span><span>Oblikuj</span><span>Odluči</span></div></div></article>
+        <article class="scene"><img src="assets/content/preincubation-program-team.jpg" alt="" /><div class="copy"><p class="kicker">Program</p><h1>Strukturirani put razvoja ideje.</h1><p>Kroz program provjeravaš pretpostavke, oblikuješ koncept i pripremaš sljedeći korak.</p></div></article>
+        <article class="scene"><img src="assets/content/digital-platform-learning.jpg" alt="" /><div class="copy"><p class="kicker">Digitalni tečajevi</p><h1>Znanje koje prati svaku fazu.</h1><p>Tečajevi pomažu razumjeti problem, korisnika, poslovni model, AI i sigurnost.</p><div class="chips"><span>Predinkubacija</span><span>AI</span><span>Design Thinking</span><span>Cybersecurity</span></div></div></article>
+        <article class="scene"><img src="assets/content/ai-tools-assistant.jpg" alt="" /><div class="copy"><p class="kicker">AI Lab i platforma</p><h1>Alati koji ubrzavaju pripremu.</h1><p>Istraži ideju, provjeri koncept i pripremi pitch uz digitalnu podršku.</p></div></article>
+        <article class="scene"><img src="assets/spaces/foiward-ltr-space.jpg" alt="" /><div class="copy"><p class="kicker">FOIward ekosustav</p><h1>Daj ideji FOIward.</h1><p>Centar, LTR lokacije, mentori, oprema i usluge povezani u jedan razvojni put.</p><div class="chips"><span>Nastavi razvoj</span><span>Doradi ideju</span><span>Promijeni smjer</span></div></div></article>
+      </section>
+      <p class="note">Trailer traje 42 sekunde. “Izvezi WebM” pokreće snimanje u pregledniku i preuzima video datoteku; GIF preview je već generiran kao brzi pregled.</p>
+      <canvas id="canvas" width="1920" height="1080"></canvas>
+    </main>
+    <script>
+      const scenes = [
+        ['assets/hero-lab.jpg','FOIWARD CENTAR','Centar u kojem ideje kreću naprijed.','Znanje, mentorstvo, prostori i tehnologija za najraniju fazu razvoja ideje.'],
+        ['assets/content/foiward-approach-idea-tech.jpg','ŠTO JE PREDINKUBACIJA?','Od početne ideje do odluke.','Dovoljna je ideja, istraživački rezultat ili problem koji želiš riješiti.'],
+        ['assets/content/preincubation-program-team.jpg','PROGRAM','Strukturirani put razvoja ideje.','Provjeri pretpostavke, oblikuj koncept i pripremi sljedeći korak.'],
+        ['assets/content/digital-platform-learning.jpg','DIGITALNI TEČAJEVI','Znanje koje prati svaku fazu.','Predinkubacija, poslovni model, AI, sigurnost i Industry 5.0.'],
+        ['assets/content/ai-tools-assistant.jpg','AI LAB I PLATFORMA','Alati koji ubrzavaju pripremu.','Istraži ideju, provjeri koncept i pripremi pitch uz digitalnu podršku.'],
+        ['assets/spaces/foiward-ltr-space.jpg','FOIWARD EKOSUSTAV','Daj ideji FOIward.','Centar, LTR lokacije, mentori, oprema i usluge povezani u jedan razvojni put.']
+      ];
+      document.getElementById('restart').addEventListener('click', () => {
+        for (const scene of document.querySelectorAll('.scene')) { scene.style.animation = 'none'; }
+        requestAnimationFrame(() => { for (const scene of document.querySelectorAll('.scene')) scene.style.animation = ''; });
+      });
+      const loaded = new Map();
+      function loadImage(src) { if (loaded.has(src)) return loaded.get(src); const p = new Promise((resolve, reject) => { const img = new Image(); img.onload = () => resolve(img); img.onerror = reject; img.src = src; }); loaded.set(src, p); return p; }
+      function wrap(ctx, text, x, y, maxWidth, lineHeight) { const words = text.split(' '); let line = ''; for (const word of words) { const test = line ? line + ' ' + word : word; if (ctx.measureText(test).width > maxWidth && line) { ctx.fillText(line, x, y); line = word; y += lineHeight; } else line = test; } ctx.fillText(line, x, y); return y; }
+      document.getElementById('record').addEventListener('click', async () => {
+        const canvas = document.getElementById('canvas'); const ctx = canvas.getContext('2d'); const stream = canvas.captureStream(30); const chunks = [];
+        const recorder = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp9' });
+        recorder.ondataavailable = e => chunks.push(e.data);
+        recorder.onstop = () => { const blob = new Blob(chunks, { type: 'video/webm' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'foiward-trailer.webm'; a.click(); URL.revokeObjectURL(a.href); };
+        const imgs = await Promise.all(scenes.map(s => loadImage(s[0]))); recorder.start(); const start = performance.now();
+        function draw(now) { const elapsed = (now - start) / 1000; const idx = Math.min(scenes.length - 1, Math.floor(elapsed / 7)); const local = elapsed - idx * 7; const img = imgs[idx]; ctx.fillStyle = '#080808'; ctx.fillRect(0,0,1920,1080); const scale = Math.max(1920 / img.width, 1080 / img.height) * (1.05 + local * 0.005); const w = img.width * scale, h = img.height * scale; ctx.globalAlpha = Math.min(1, local / .7, (7 - local) / .7); ctx.drawImage(img, (1920-w)/2, (1080-h)/2, w, h); const grad = ctx.createLinearGradient(0,0,1920,0); grad.addColorStop(0,'rgba(0,0,0,.84)'); grad.addColorStop(.62,'rgba(0,0,0,.18)'); grad.addColorStop(1,'rgba(0,0,0,.62)'); ctx.fillStyle = grad; ctx.fillRect(0,0,1920,1080); const s = scenes[idx]; ctx.fillStyle = '#d7b35a'; ctx.font = '900 34px Arial'; ctx.fillText(s[1], 130, 642); ctx.fillStyle = '#fff'; ctx.font = '900 104px Arial'; wrap(ctx, s[2], 130, 755, 1120, 104); ctx.fillStyle = 'rgba(255,255,255,.84)'; ctx.font = '400 38px Arial'; wrap(ctx, s[3], 130, 950, 1120, 50); ctx.globalAlpha = 1; if (elapsed < 42) requestAnimationFrame(draw); else recorder.stop(); }
+        requestAnimationFrame(draw);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="hr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Asistent za razvoj ideje · FOIward AI Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --red: #d6092f;
+    --red-dark: #a90022;
+    --red-soft: #fbe5e9;
+    --ink: #080808;
+    --ink-2: #141414;
+    --muted: #5b5b5b;
+    --line: #e5ddd3;
+    --warm: #f6f2ec;
+    --paper: #fbf8f3;
+    --gold: #caa456;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", -apple-system, sans-serif;
+    background: var(--warm);
+    color: var(--ink);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .mono { font-family: "JetBrains Mono", monospace; }
+
+  /* Nav */
+  nav.appnav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 16px 24px;
+    background: var(--ink);
+    color: white;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    flex-shrink: 0;
+  }
+  .brand { font-size: 24px; font-weight: 900; letter-spacing: -0.02em; line-height: 1; }
+  .brand span { color: var(--red); }
+  .brand-caption { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.6); margin-left: 12px; font-family: "JetBrains Mono", monospace; }
+  .page-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--red); font-family: "JetBrains Mono", monospace; }
+
+  /* Layout */
+  main.workspace {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    min-height: 0;
+  }
+  .chat-col { display: flex; flex-direction: column; min-height: 0; border-right: 1px solid var(--line); }
+  .chat-scroll { flex: 1; min-height: 0; overflow-y: auto; }
+  .chat-inner { max-width: 640px; margin: 0 auto; padding: 24px; padding-bottom: 16px; }
+
+  /* Header inside chat */
+  .chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .chat-title-eyebrow { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--red); margin-bottom: 4px; font-family: "JetBrains Mono", monospace; }
+  .chat-subtitle { font-size: 12px; color: var(--muted); }
+  .chat-reset { font-size: 12px; color: var(--muted); text-decoration: none; }
+
+  /* Messages */
+  .msgs { display: flex; flex-direction: column; gap: 20px; }
+  .msg { display: flex; gap: 12px; align-items: flex-start; }
+  .msg.user { justify-content: flex-end; }
+  .avatar {
+    width: 32px; height: 32px; flex-shrink: 0;
+    display: grid; place-items: center;
+    font-size: 10px; font-weight: 700; font-family: "JetBrains Mono", monospace;
+  }
+  .avatar.ai { background: var(--red); color: white; }
+  .avatar.artifact { background: var(--red); color: white; font-size: 14px; font-weight: 900; }
+  .avatar.you { background: var(--warm); border: 1px solid var(--line); color: var(--muted); }
+  .bubble {
+    max-width: 85%;
+    font-size: 14px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+  }
+  .bubble.user {
+    background: var(--ink);
+    color: white;
+    padding: 12px 16px;
+  }
+  .bubble.bot { color: var(--ink); }
+
+  /* Artifact card */
+  .artifact-card {
+    width: 100%;
+    background: white;
+    border: 1px solid var(--line);
+    padding: 16px;
+    cursor: pointer;
+    transition: border-color 150ms, box-shadow 150ms;
+  }
+  .artifact-card:hover { border-color: var(--red); box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  .artifact-card-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 8px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--red);
+  }
+  .artifact-card-open { color: var(--muted); }
+  .artifact-card-title { font-size: 16px; font-weight: 900; letter-spacing: -0.01em; line-height: 1.2; margin-bottom: 4px; }
+  .artifact-card-subtitle { font-size: 14px; color: var(--muted); line-height: 1.4; }
+
+  /* Input footer */
+  .input-footer { border-top: 1px solid var(--line); background: white; flex-shrink: 0; }
+  .chip-row { padding: 12px 24px 8px; }
+  .chip-row-inner { max-width: 640px; margin: 0 auto; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .chip-label { font-family: "JetBrains Mono", monospace; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-right: 4px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 10px;
+    background: var(--warm);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--ink-2);
+  }
+  .chip .icon { color: var(--red); }
+  .input-row { padding: 12px 24px; }
+  .input-row-inner { max-width: 640px; margin: 0 auto; display: flex; gap: 12px; align-items: stretch; }
+  .fake-textarea {
+    flex: 1;
+    border: 1px solid var(--line);
+    padding: 10px 14px;
+    background: white;
+    font-size: 14px;
+    color: var(--muted);
+    min-height: 62px;
+    line-height: 1.5;
+  }
+  .send-btn {
+    background: var(--red);
+    color: white;
+    border: none;
+    padding: 0 24px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  /* Sidebar */
+  aside.sidebar { display: flex; flex-direction: column; background: white; min-height: 0; }
+  .sidebar-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px; border-bottom: 1px solid var(--line); flex-shrink: 0;
+  }
+  .sidebar-title { font-family: "JetBrains Mono", monospace; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--red); }
+  .sidebar-count { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .sidebar-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+  .field-card {
+    background: white;
+    border: 1px solid var(--line);
+    padding: 12px;
+  }
+  .field-label { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+  .field-label-text { font-family: "JetBrains Mono", monospace; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--red); }
+  .field-check { font-size: 9px; color: var(--gold); }
+  .field-value { font-size: 12px; color: var(--ink); line-height: 1.45; }
+</style>
+</head>
+<body>
+
+<nav class="appnav">
+  <div style="display:flex;align-items:baseline;gap:12px;">
+    <span class="brand"><span>FOI</span>ward</span>
+    <span class="brand-caption">AI Lab</span>
+  </div>
+  <div class="page-label">Razvoj ideje</div>
+</nav>
+
+<main class="workspace">
+  <div class="chat-col">
+    <div class="chat-scroll">
+      <div class="chat-inner">
+        <div class="chat-header">
+          <div>
+            <div class="chat-title-eyebrow">Razvoj ideje</div>
+            <div class="chat-subtitle">Chat s AI asistentom · 2 web pretrage</div>
+          </div>
+          <a href="#" class="chat-reset">↻ resetiraj</a>
+        </div>
+
+        <div class="msgs">
+
+          <!-- 1: Bot intro -->
+          <div class="msg">
+            <div class="avatar ai">AI</div>
+            <div class="bubble bot">Hej 👋 Radim s tobom na IT startup ideji za predinkubaciju. Web app, mobilna aplikacija, SaaS, AI alat - takva zvjer.
+
+Dvije opcije: ili već imaš neku sirovu ideju u glavi i idemo je razraditi, ili krećemo od nule (od domene ili tech stacka koji te zanima). Šta ti odgovara?</div>
+          </div>
+
+          <!-- 2: User -->
+          <div class="msg user">
+            <div class="bubble user">Imam ideju - AI matematički tutor za maturante preko WhatsApp-a. Zove se Skill.ai.</div>
+            <div class="avatar you">Ti</div>
+          </div>
+
+          <!-- 3: Bot -->
+          <div class="msg">
+            <div class="avatar ai">AI</div>
+            <div class="bubble bot">OK, konkretno. Prvo pitanje - kakav problem to rješava, i tko ga danas ima najviše?</div>
+          </div>
+
+          <!-- 4: User -->
+          <div class="msg user">
+            <div class="bubble user">70% hrvatskih maturanata pada državnu maturu iz matematike ili prolazi ispod 50%. Privatne instrukcije su €25-40 po satu što si većina obitelji ne može priuštiti. Nastavnici u razredu od 30 djece nemaju vremena.</div>
+            <div class="avatar you">Ti</div>
+          </div>
+
+          <!-- 5: Bot -->
+          <div class="msg">
+            <div class="avatar ai">AI</div>
+            <div class="bubble bot">Solidan problem, s brojkom. Sad me zanima jedna konkretna osoba - ne demografska skupina, nego jedan Marko ili Marija koja to osjeća. Tko je taj?</div>
+          </div>
+
+          <!-- 6: User -->
+          <div class="msg user">
+            <div class="bubble user">Marija, 17, treći razred gimnazije u Zagrebu. Prosjek 4.2, iz matematike 3. Roditelji joj ne mogu priuštiti instrukcije. Uči navečer sama na telefonu - TikTok, YouTube tutoriali kad zaglavi. Ali nikad ne dobiva feedback na svoje rješavanje.</div>
+            <div class="avatar you">Ti</div>
+          </div>
+
+          <!-- 7: Bot -->
+          <div class="msg">
+            <div class="avatar ai">AI</div>
+            <div class="bubble bot">Odličan startni portret. Napravio sam ti detaljnu personu s onim što si opisao - Marijin tipičan dan, ciljevi, frustracije, koje workaround-e trenutno koristi. Klikni da vidiš u punom formatu:</div>
+          </div>
+
+          <!-- 8: Persona artifact -->
+          <div class="msg">
+            <div class="avatar artifact">◉</div>
+            <div class="artifact-card" style="max-width:85%;flex:1;">
+              <div class="artifact-card-header">
+                <span>Artefakt · Persona</span>
+                <span class="artifact-card-open">Otvori →</span>
+              </div>
+              <div class="artifact-card-title">Marija Kovač, 17</div>
+              <div class="artifact-card-subtitle">Učenica 3. razreda gimnazije, ne polazi instrukcije</div>
+            </div>
+          </div>
+
+          <!-- 9: Bot -->
+          <div class="msg">
+            <div class="avatar ai">AI</div>
+            <div class="bubble bot">Sad me zanima - zašto baš ti? Photomath, Chegg, Khan Academy postoje već godinama. U čemu je tvoj edge?</div>
+          </div>
+
+          <!-- 10: User -->
+          <div class="msg user">
+            <div class="bubble user">Osnivačica je 6 godina radila kao profesor matematike u gimnaziji, magistrirala didaktiku na PMF-u - zna gdje maturanti zapinju. Konkurencija daje samo rješenje - naš pristup je sokratski (vodi kroz razmišljanje) i prilagođen hrvatskoj maturi. Nitko drugi to ne radi.</div>
+            <div class="avatar you">Ti</div>
+          </div>
+
+          <!-- 11: Bot -->
+          <div class="msg">
+            <div class="avatar ai">AI</div>
+            <div class="bubble bot">OK, dva jaka differentiator-a: metoda (sokratska) i lokalizacija (hrvatska matura). Da provjerimo krajobraz gdje se pozicioniraš - evo brzi pregled 5 konkurenata i točno u čemu su drugačiji od tvoje ideje:</div>
+          </div>
+
+          <!-- 12: Competitors -->
+          <div class="msg">
+            <div class="avatar artifact">◇</div>
+            <div class="artifact-card" style="max-width:85%;flex:1;">
+              <div class="artifact-card-header">
+                <span>Artefakt · Konkurenti</span>
+                <span class="artifact-card-open">Otvori →</span>
+              </div>
+              <div class="artifact-card-title">5 konkurenata</div>
+              <div class="artifact-card-subtitle">Photomath, Chegg / Course Hero, Khan Academy</div>
+            </div>
+          </div>
+
+          <!-- 13: Bot -->
+          <div class="msg">
+            <div class="avatar ai">AI</div>
+            <div class="bubble bot">Prije nego kreneš graditi, moraš potvrditi da Marija stvarno tako razmišlja - ne samo tvoja pretpostavka. Evo intervju script s 15 pitanja koje možeš postaviti pravim maturantima. Pravilo: pitaj o PONAŠANJU u prošlosti, ne mišljenju o tvom proizvodu.</div>
+          </div>
+
+          <!-- 14: Interview -->
+          <div class="msg">
+            <div class="avatar artifact">?</div>
+            <div class="artifact-card" style="max-width:85%;flex:1;">
+              <div class="artifact-card-header">
+                <span>Artefakt · Intervju</span>
+                <span class="artifact-card-open">Otvori →</span>
+              </div>
+              <div class="artifact-card-title">15 pitanja za intervju</div>
+              <div class="artifact-card-subtitle">Ispričaj mi o svom tipičnom danu tijekom pripreme za maturu iz matematike.</div>
+            </div>
+          </div>
+
+          <!-- 15: Bot -->
+          <div class="msg">
+            <div class="avatar ai">AI</div>
+            <div class="bubble bot">Zadnje - zašto WhatsApp? Zašto ne aplikacija?</div>
+          </div>
+
+          <!-- 16: User -->
+          <div class="msg user">
+            <div class="bubble user">87% hrvatske omladine već koristi WhatsApp svaki dan. Nula friction za download, nula onboarding. Marija samo doda broj u kontakte i piše kao prijatelju. Barijera skoro nula.</div>
+            <div class="avatar you">Ti</div>
+          </div>
+
+          <!-- 17: Bot -->
+          <div class="msg">
+            <div class="avatar ai">AI</div>
+            <div class="bubble bot">Zero friction je zlato. To je jak insight.
+
+Kako planiraš zarađivati?</div>
+          </div>
+
+          <!-- 18: User -->
+          <div class="msg user">
+            <div class="bubble user">Freemium: 5 zadataka/dan besplatno, unlimited za €7.99/mj ili €59/god. Distribucija preko TikTok influencera tokom pripreme za maturu (siječanj-svibanj). Otvoreno pitanje - naplatiti direktno Mariji, ili roditelja preko posebnog portala?</div>
+            <div class="avatar you">Ti</div>
+          </div>
+
+          <!-- 19: Bot -->
+          <div class="msg">
+            <div class="avatar ai">AI</div>
+            <div class="bubble bot">Solidan model. Prije nego pišeš liniju koda, možeš u 2 dana testirati stvarnu potražnju - evo landing copy koji možeš staviti na Carrd ili sličan alat i mjeriti signup rate:</div>
+          </div>
+
+          <!-- 20: Landing -->
+          <div class="msg">
+            <div class="avatar artifact">◨</div>
+            <div class="artifact-card" style="max-width:85%;flex:1;">
+              <div class="artifact-card-header">
+                <span>Artefakt · Landing</span>
+                <span class="artifact-card-open">Otvori →</span>
+              </div>
+              <div class="artifact-card-title">AI tutor koji te vodi kroz maturu iz matematike.</div>
+              <div class="artifact-card-subtitle">Bez skupih instrukcija. Piši na WhatsApp, dobij vođena rješavanja korak po korak - kao pravi profesor. Prilagođeno hrvatskoj državnoj maturi.</div>
+            </div>
+          </div>
+
+          <!-- 21: Bot -->
+          <div class="msg">
+            <div class="avatar ai">AI</div>
+            <div class="bubble bot">I cjelokupna slika u Business Model Canvas - 9 blokova s onim što smo dosad razradili. Otvoreni resursi/partneri su vidljivi da znaš na čemu radiš dalje:</div>
+          </div>
+
+          <!-- 22: BMC -->
+          <div class="msg">
+            <div class="avatar artifact">▦</div>
+            <div class="artifact-card" style="max-width:85%;flex:1;">
+              <div class="artifact-card-header">
+                <span>Artefakt · BMC</span>
+                <span class="artifact-card-open">Otvori →</span>
+              </div>
+              <div class="artifact-card-title">Business Model Canvas</div>
+              <div class="artifact-card-subtitle">Sokratski AI tutor iz matematike na WhatsApp-u</div>
+            </div>
+          </div>
+
+          <!-- 23: Bot closing -->
+          <div class="msg">
+            <div class="avatar ai">AI</div>
+            <div class="bubble bot">Preporuka za sljedeći korak: prvo objavi landing i za 3-5 dana mjeri signup rate (cilj: 20%+ konverzija posjetitelja). Paralelno, razgovaraj s 5 pravih maturanata koristeći intervju script - traži konkretno ponašanje, ne mišljenje. Kad se vratiš s podacima, pripremimo elevator pitch za mentore.</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Input footer -->
+    <div class="input-footer">
+      <div class="chip-row">
+        <div class="chip-row-inner">
+          <span class="chip-label">Generiraj:</span>
+          <span class="chip"><span class="icon">▦</span> BMC</span>
+          <span class="chip"><span class="icon">◉</span> Persona</span>
+          <span class="chip"><span class="icon">?</span> Intervju</span>
+          <span class="chip"><span class="icon">◨</span> Landing</span>
+          <span class="chip"><span class="icon">◇</span> Konkurenti</span>
+        </div>
+      </div>
+      <div class="input-row">
+        <div class="input-row-inner">
+          <div class="fake-textarea">Piši prirodno - ako nešto nije jasno, pitaj…</div>
+          <button class="send-btn">Pošalji →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div>
+        <div class="sidebar-title">Idejni prostor</div>
+        <div class="sidebar-count">6/6 polja</div>
+      </div>
+      <span style="color:var(--muted);">→</span>
+    </div>
+    <div class="sidebar-scroll">
+      <div class="field-card">
+        <div class="field-label"><span class="field-label-text">Radni naziv</span><span class="field-check">●</span></div>
+        <div class="field-value">Skill.ai</div>
+      </div>
+      <div class="field-card">
+        <div class="field-label"><span class="field-label-text">One-liner</span><span class="field-check">●</span></div>
+        <div class="field-value">AI matematički tutor koji vodi hrvatske maturante kroz rješavanje, dostupan 24/7 na WhatsApp-u.</div>
+      </div>
+      <div class="field-card">
+        <div class="field-label"><span class="field-label-text">Problem</span><span class="field-check">●</span></div>
+        <div class="field-value">70% hrvatskih maturanata pada državnu maturu iz matematike. Privatne instrukcije koštaju €25-40 po satu što si većina obitelji ne može priuštiti.</div>
+      </div>
+      <div class="field-card">
+        <div class="field-label"><span class="field-label-text">Za koga</span><span class="field-check">●</span></div>
+        <div class="field-value">Marija, 17, treći razred gimnazije u Zagrebu. Prosjek 4.2, iz matematike 3. Uči navečer sama na telefonu bez feedback-a.</div>
+      </div>
+      <div class="field-card">
+        <div class="field-label"><span class="field-label-text">Zašto baš ti / zašto zanimljivo</span><span class="field-check">●</span></div>
+        <div class="field-value">Osnivačica 6 god. profesor matematike, magistrirala didaktiku PMF. Konkurencija daje rješenje, mi vodimo kroz razmišljanje. Prilagođeno hrvatskoj maturi.</div>
+      </div>
+      <div class="field-card">
+        <div class="field-label"><span class="field-label-text">Bilješke</span><span class="field-check">●</span></div>
+        <div class="field-value">WhatsApp = zero friction (87% penetracija). Freemium €7.99/mj. Distribucija TikTok influenceri jan-svibanj. Otvoreno: naplata roditelji vs. učenici.</div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="hr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Prijava | FOIward</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html"><span>FOI</span>ward</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span><em>Izbornik</em></button>
+      <nav class="nav" id="nav" aria-label="Glavna navigacija">
+<a href="o-centru.html">O Centru</a>
+<a href="program.html">Predinkubacijski program</a>
+<a href="usluge.html">Usluge</a>
+<a href="ai-lab.html">AI Lab</a>
+<a href="novosti.html">Novosti</a>
+<a href="kontakt.html">Kontakt</a>
+<a class="nav-cta" href="prijava.html">Prijava</a>
+      </nav>
+    </header>
+
+    <main class="login-page">
+      <section class="login-shell" aria-labelledby="login-title">
+        <div class="login-visual">
+          <img src="assets/content/login-ai-platform.jpg" alt="AI sučelje FOIward platforme za prijavu korisnika" />
+          <div class="login-visual-overlay"></div>
+          <div class="login-visual-content">
+            <p class="kicker">FOIward platforma</p>
+            <h1 id="login-title">Prijava korisnika</h1>
+            <p>Pristup profilu ideje, zadacima, materijalima, mentorskim povratnim informacijama i rezervaciji resursa.</p>
+          </div>
+        </div>
+
+        <form class="support-form login-form" action="platforma.html" aria-label="Forma za prijavu korisnika na FOIward platformu">
+          <p class="kicker">Korisnički pristup</p>
+          <h2>Uđite u platformu</h2>
+          <label>Korisničko ime<input type="text" name="username" autocomplete="username" placeholder="korisnicko.ime" /></label>
+          <label>Lozinka<input id="loginPassword" type="password" name="password" autocomplete="current-password" placeholder="Upišite lozinku" /></label>
+          <label class="remember-line"><input id="showLoginPassword" type="checkbox" name="show-password" /> Prikaži lozinku</label>
+          <button class="button" type="submit">Prijavi se</button>
+          <div class="login-links">
+            <a href="kontakt.html">Nemate pristup? Kontaktirajte nas</a>
+            <a href="kontakt.html">Zaboravljena lozinka</a>
+          </div>
+          <p class="form-note">Prijava je demonstracijska u ovoj fazi prototipa.</p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer site-footer">
+      <div class="footer-main">
+        <div class="footer-brand-block">
+          <a class="brand footer-wordmark" href="index.html"><span>FOI</span>ward</a>
+          <p>Daj ideji <span class="footer-slogan-foi">FOI</span>ward</p>
+          <div class="footer-rhythm" aria-label="FOIward područja"><span>Ideje</span><span>Mentorstvo</span><span>Prostori</span><span>AI Lab</span></div>
+          <address>
+            Sveučilište u Zagrebu<br />
+            Fakultet organizacije i informatike<br />
+            Pavlinska 2, 42000 Varaždin<br />
+            <a href="mailto:foiward@foi.hr">foiward@foi.hr</a>
+          </address>
+        </div>
+
+        <div class="footer-logo-group" aria-label="Nositelji i financijski mehanizmi">
+          <a class="footer-logo-card" href="https://www.foi.unizg.hr/" target="_blank" rel="noreferrer" aria-label="Fakultet organizacije i informatike">
+            <img src="assets/footer/foi-znak-color.png" alt="Fakultet organizacije i informatike" />
+          </a>
+          <a class="footer-logo-card" href="https://varazdin.hr/" target="_blank" rel="noreferrer" aria-label="Grad Varaždin">
+            <img src="assets/partners/grad-varazdin.jpg" alt="Grad Varaždin" />
+          </a>
+          <span class="footer-logo-card" aria-label="ITU mehanizam">
+            <img src="assets/footer/itu-logo.png" alt="ITU mehanizam" />
+          </span>
+          <span class="footer-logo-card footer-logo-eu" aria-label="Sufinancira Europska unija">
+            <img src="assets/footer/sufinancira-europska-unija.svg" alt="Sufinancira Europska unija" />
+          </span>
+        </div>
+      </div>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>

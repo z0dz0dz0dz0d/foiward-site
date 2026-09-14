@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="hr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Isprobaj predinkubaciju | FOIward</title>
+    <meta name="description" content="Interaktivna simulacija predinkubacijskog procesa FOIward centra." />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html"><span>FOI</span>ward</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span><em>Izbornik</em></button>
+      <nav class="nav" id="nav" aria-label="Glavna navigacija">
+<a href="o-centru.html">O Centru</a>
+<a href="program.html">Predinkubacijski program</a>
+<a href="usluge.html">Usluge</a>
+<a href="ai-lab.html">AI Lab</a>
+<a href="novosti.html">Novosti</a>
+<a href="kontakt.html">Kontakt</a>
+<a class="nav-cta" href="prijava.html">Prijava</a>
+      </nav>
+    </header>
+
+    <main class="try-page">
+      <section class="try-hero">
+        <img src="assets/content/mentor-brainstorm.jpg" alt="Mentorska radionica za razvoj ideje" />
+        <div class="try-hero-overlay"></div>
+        <div class="try-hero-content">
+          <p class="kicker">ISPROBAJ PREDINKUBACIJU</p>
+          <h1>Prođi put od prve ideje do bolje odluke</h1>
+          <p>U nekoliko minuta doživi kako izgleda rad u predinkubaciji: razgovor, mali zadatak, alat, povratna informacija i prilagodba ideje.</p>
+          <a class="button" href="#simulacija">Pokreni simulaciju</a>
+        </div>
+      </section>
+
+      <section class="simulation-shell" id="simulacija" aria-labelledby="simulation-title">
+        <div class="simulation-intro">
+          <p class="kicker">OGLEDNA IDEJA</p>
+          <h2 id="simulation-title">Pametni sustav za praćenje potrošnje energije u školskim prostorima</h2>
+          <p>Simulacija prati jednu oglednu ideju. Tvoje odluke ne ocjenjuju rezultat, nego pokazuju kako se smjer ideje mijenja kroz dokaze, razgovor i prototipiranje.</p>
+        </div>
+
+        <div class="simulation-grid">
+          <aside class="simulation-progress" aria-label="Koraci simulacije">
+            <span class="progress-pill active" data-step-dot="0">01 Ideja</span>
+            <span class="progress-pill" data-step-dot="1">02 Mentor</span>
+            <span class="progress-pill" data-step-dot="2">03 Radionica</span>
+            <span class="progress-pill" data-step-dot="3">04 Alat</span>
+            <span class="progress-pill" data-step-dot="4">05 Feedback</span>
+            <span class="progress-pill" data-step-dot="5">06 Prilagodba</span>
+          </aside>
+
+          <article class="simulation-card" aria-live="polite">
+            <div class="sim-card-topline">
+              <span id="simStepNumber">01</span>
+              <strong id="simStepLabel">Dolazak s idejom</strong>
+            </div>
+            <h3 id="simTitle">Počinješ s korisnom, ali još širokom idejom.</h3>
+            <p id="simText">Želiš razviti rješenje koje školama pomaže vidjeti gdje se troši energija. Ideja zvuči dobro, ali još nije jasno tko ima najveći problem i koja bi promjena stvarno pomogla.</p>
+            <div class="mentor-note" id="simMentor">Mentor: Krenimo od pitanja. Tko će prvi osjetiti vrijednost rješenja?</div>
+            <div class="sim-choices" id="simChoices"></div>
+          </article>
+
+          <aside class="idea-console">
+            <p class="kicker">RADNI TRAG</p>
+            <h3>Tvoja ideja kroz simulaciju</h3>
+            <div class="idea-meter" aria-hidden="true"><span id="ideaMeter"></span></div>
+            <ul id="ideaLog">
+              <li>Početna ideja: praćenje potrošnje energije u školama.</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section class="simulation-summary" id="simSummary" hidden>
+        <div>
+          <p class="kicker">ŠTO SI PROŠLA/PROŠAO</p>
+          <h2>Predinkubacija završava jasnijom odlukom, ne nužno gotovim poduzećem.</h2>
+          <p>U stvarnom procesu prolazi se kroz razgovor s mentorima, razumijevanje korisnika, provjeru pretpostavki, prvi prototip, povratne informacije i odluku o sljedećem koraku.</p>
+        </div>
+        <div class="real-path">
+          <span>Ideja</span>
+          <span>Mentor</span>
+          <span>Radionica</span>
+          <span>Alat</span>
+          <span>Feedback</span>
+          <span>Odluka</span>
+        </div>
+        <p class="summary-note">Program je namijenjen studentima, istraživačima, građanima, timovima, startupovima i poduzećima koja žele provjeriti ideju prije većih razvojnih odluka.</p>
+        <a class="button" href="prijava.html">Prijavi se</a>
+      </section>
+    </main>
+
+    <footer class="footer site-footer">
+      <div class="footer-main">
+        <div class="footer-brand-block">
+          <a class="brand footer-wordmark" href="index.html"><span>FOI</span>ward</a>
+          <p>Daj ideji <span class="footer-slogan-foi">FOI</span>ward</p>
+          <div class="footer-rhythm" aria-label="FOIward područja"><span>Ideje</span><span>Mentorstvo</span><span>Prostori</span><span>AI Lab</span></div>
+          <address>
+            Sveučilište u Zagrebu<br />
+            Fakultet organizacije i informatike<br />
+            Pavlinska 2, 42000 Varaždin<br />
+            <a href="mailto:foiward@foi.hr">foiward@foi.hr</a>
+          </address>
+        </div>
+
+        <div class="footer-logo-group" aria-label="Nositelji i financijski mehanizmi">
+          <a class="footer-logo-card" href="https://www.foi.unizg.hr/" target="_blank" rel="noreferrer" aria-label="Fakultet organizacije i informatike">
+            <img src="assets/footer/foi-znak-color.png" alt="Fakultet organizacije i informatike" />
+          </a>
+          <a class="footer-logo-card" href="https://varazdin.hr/" target="_blank" rel="noreferrer" aria-label="Grad Varaždin">
+            <img src="assets/partners/grad-varazdin.jpg" alt="Grad Varaždin" />
+          </a>
+          <span class="footer-logo-card" aria-label="ITU mehanizam">
+            <img src="assets/footer/itu-logo.png" alt="ITU mehanizam" />
+          </span>
+          <span class="footer-logo-card footer-logo-eu" aria-label="Sufinancira Europska unija">
+            <img src="assets/footer/sufinancira-europska-unija.svg" alt="Sufinancira Europska unija" />
+          </span>
+        </div>
+      </div>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "name": "foiward-static",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "serve -l ${PORT:-3000} -n ."
+  },
+  "dependencies": {
+    "serve": "^14.2.4"
+  }
+}

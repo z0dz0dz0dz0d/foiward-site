@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="hr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Elevator pitch · FOIward AI Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --red: #d6092f;
+    --red-dark: #a90022;
+    --red-soft: #fbe5e9;
+    --ink: #080808;
+    --ink-2: #141414;
+    --muted: #5b5b5b;
+    --line: #e5ddd3;
+    --warm: #f6f2ec;
+    --paper: #fbf8f3;
+    --gold: #caa456;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", -apple-system, sans-serif;
+    background: var(--warm);
+    color: var(--ink);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  nav.appnav {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; padding: 16px 24px;
+    background: var(--ink); color: white;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    flex-shrink: 0;
+  }
+  .brand { font-size: 24px; font-weight: 900; letter-spacing: -0.02em; line-height: 1; }
+  .brand span { color: var(--red); }
+  .brand-caption { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.6); margin-left: 12px; font-family: "JetBrains Mono", monospace; }
+  .page-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--red); font-family: "JetBrains Mono", monospace; }
+
+  /* Grid: chat left, slides right */
+  main.workspace {
+    flex: 1;
+    display: grid;
+    grid-template-columns: minmax(360px, 42%) 1fr;
+    min-height: 0;
+  }
+
+  /* Chat side */
+  .chat-side { display: flex; flex-direction: column; min-height: 0; background: white; border-right: 1px solid var(--line); }
+  .chat-side-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 24px; border-bottom: 1px solid var(--line); flex-shrink: 0;
+  }
+  .chat-side-title { display: flex; align-items: center; gap: 10px; }
+  .chat-side-logo {
+    width: 28px; height: 28px; background: var(--red); color: white;
+    display: grid; place-items: center; font-weight: 900; font-size: 14px;
+  }
+  .chat-side-title-inner { font-size: 13px; font-weight: 800; }
+  .chat-side-subtitle { font-size: 11px; color: var(--muted); }
+  .progress-bar { height: 4px; background: var(--line); position: relative; flex-shrink: 0; }
+  .progress-bar span { display: block; height: 100%; background: var(--red); width: 100%; }
+
+  .chat-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 16px 24px; display: flex; flex-direction: column; gap: 12px; }
+  .msg { display: flex; }
+  .msg.bot { justify-content: flex-start; }
+  .msg.user { justify-content: flex-end; }
+  .bubble {
+    max-width: 85%;
+    font-size: 13px;
+    line-height: 1.55;
+    padding: 10px 14px;
+    white-space: pre-wrap;
+  }
+  .bubble.user { background: var(--red); color: white; border-radius: 12px 12px 4px 12px; }
+  .bubble.bot { background: var(--paper); border: 1px solid var(--line); border-radius: 12px 12px 12px 4px; color: var(--ink); }
+
+  .chat-input {
+    border-top: 1px solid var(--line); background: var(--paper);
+    padding: 14px 24px; flex-shrink: 0;
+  }
+  .fake-input {
+    background: white; border: 1px solid var(--line);
+    padding: 10px 14px; font-size: 13px; color: var(--muted);
+    min-height: 68px; line-height: 1.5;
+  }
+  .fake-input-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+  .fake-input-footer .hint { font-size: 11px; color: var(--muted); }
+  .send-btn { background: var(--red); color: white; border: none; padding: 8px 16px; font-weight: 700; font-size: 13px; }
+
+  /* Slides side */
+  .slides-side { display: flex; flex-direction: column; min-height: 0; background: var(--paper); }
+  .slides-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 24px; border-bottom: 1px solid var(--line); flex-shrink: 0; background: white;
+  }
+  .slides-header-left { display: flex; align-items: center; gap: 12px; }
+  .chip-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 10px; background: var(--red-soft); color: var(--red-dark);
+    font-size: 11px; font-weight: 700; border-radius: 999px;
+  }
+  .slides-header-right { display: flex; align-items: center; gap: 8px; }
+  .theme-picker { display: flex; align-items: center; gap: 4px; padding-right: 12px; border-right: 1px solid var(--line); }
+  .theme-picker-label { font-size: 11px; color: var(--muted); margin-right: 4px; }
+  .theme-btn {
+    font-size: 11px; padding: 4px 10px; border: 1px solid var(--line);
+    background: white; color: var(--ink-2); font-weight: 500;
+  }
+  .theme-btn.active { background: var(--red); color: white; border-color: var(--red); }
+  .btn-ghost { padding: 6px 12px; font-size: 13px; border: 1px solid var(--line); background: white; color: var(--ink); font-weight: 500; }
+  .btn-primary { padding: 6px 12px; font-size: 13px; background: var(--red); color: white; border: none; font-weight: 700; }
+
+  .slide-wrap { flex: 1; min-height: 0; overflow: auto; padding: 32px; display: flex; align-items: center; justify-content: center; }
+  .slide {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    max-width: 720px;
+    background: white;
+    border: 1px solid var(--line);
+    box-shadow: 0 10px 30px -12px rgba(0,0,0,0.15);
+    padding: 42px 52px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+  .slide-tag {
+    font-size: 11px; font-weight: 800; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--red);
+    position: absolute; top: 30px; left: 42px;
+    font-family: "JetBrains Mono", monospace;
+  }
+  .slide-content {
+    flex: 1; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center;
+    padding: 0 5%; gap: 20px;
+  }
+  .slide-headline {
+    font-size: 46px; font-weight: 900; letter-spacing: -0.035em; line-height: 1.02;
+    max-width: 720px;
+  }
+  .slide-subtext {
+    font-size: 18px; font-weight: 400; line-height: 1.4;
+    opacity: 0.65; max-width: 580px;
+  }
+  .slide-footer {
+    position: absolute; bottom: 22px; left: 52px; right: 52px;
+    display: flex; justify-content: space-between; font-size: 12px; opacity: 0.65;
+  }
+
+  .slides-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 24px; border-top: 1px solid var(--line); background: white; flex-shrink: 0;
+  }
+  .dots { display: flex; gap: 6px; align-items: center; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
+  .dot.active { width: 24px; border-radius: 999px; background: var(--red); }
+</style>
+</head>
+<body>
+
+<nav class="appnav">
+  <div style="display:flex;align-items:baseline;gap:12px;">
+    <span class="brand"><span>FOI</span>ward</span>
+    <span class="brand-caption">AI Lab</span>
+  </div>
+  <div class="page-label">Elevator pitch</div>
+</nav>
+
+<main class="workspace">
+
+  <!-- CHAT SIDE -->
+  <div class="chat-side">
+    <div class="chat-side-header">
+      <div class="chat-side-title">
+        <div class="chat-side-logo">F</div>
+        <div>
+          <div class="chat-side-title-inner">Elevator Pitch</div>
+          <div class="chat-side-subtitle">4/4 polja prikupljeno</div>
+        </div>
+      </div>
+      <a href="#" style="font-size:11px;color:var(--muted);text-decoration:none;">↻ reset</a>
+    </div>
+    <div class="progress-bar"><span></span></div>
+
+    <div class="chat-scroll">
+      <div class="msg bot">
+        <div class="bubble bot">Hej 👋 Radimo elevator pitch u 4 slajda: Problem, Za koga, Rješenje, Utjecaj. Slidovi desno se ažuriraju uživo dok razgovaramo.
+
+Za početak - koji problem rješavaš? Budi konkretan.</div>
+      </div>
+      <div class="msg user">
+        <div class="bubble user">70% hrvatskih maturanata pada državnu maturu iz matematike. Privatne instrukcije su €25-40 po satu što si većina obitelji ne može priuštiti.</div>
+      </div>
+      <div class="msg bot">
+        <div class="bubble bot">✨ Ažuriram "Problem" slide…</div>
+      </div>
+      <div class="msg bot">
+        <div class="bubble bot">Solidan problem s konkretnom brojkom. Sad me zanima - tko točno to osjeća? Ako možeš, opiši jednu konkretnu osobu.</div>
+      </div>
+      <div class="msg user">
+        <div class="bubble user">Marija, 17, treći razred gimnazije u Zagrebu. Prosjek 4.2, iz matematike 3. Uči navečer sama na telefonu, TikTok i YouTube, ali nikad ne dobiva feedback na svoje rješavanje.</div>
+      </div>
+      <div class="msg bot">
+        <div class="bubble bot">✨ Ažuriram "Za koga" slide…</div>
+      </div>
+      <div class="msg bot">
+        <div class="bubble bot">Odličan portret. Kako to rješavaš?</div>
+      </div>
+      <div class="msg user">
+        <div class="bubble user">AI tutor koji radi kao WhatsApp bot. Slikaš zadatak, dobiješ vođeno rješavanje korak po korak - ne odgovor, već pitanja koja te vode kroz razmišljanje kao pravi tutor. Na hrvatskom, s primjerima iz državne mature.</div>
+      </div>
+      <div class="msg bot">
+        <div class="bubble bot">✨ Ažuriram "Rješenje" slide…</div>
+      </div>
+      <div class="msg bot">
+        <div class="bubble bot">Zadnje - kakav utjecaj želiš postići? Idealno konkretno.</div>
+      </div>
+      <div class="msg user">
+        <div class="bubble user">Maturanti prolaze maturu s 20% boljim prosjekom uz 10x manje troška. Cilj: 5000 platećih do 2027 i pristup kvalitetnoj matematičkoj edukaciji za svaku obitelj bez obzira na budžet.</div>
+      </div>
+      <div class="msg bot">
+        <div class="bubble bot">✨ Ažuriram "Utjecaj" slide…</div>
+      </div>
+      <div class="msg bot">
+        <div class="bubble bot">Elevator pitch je spreman - klikaj Poliraj pitch desno.</div>
+      </div>
+      <div class="msg bot">
+        <div class="bubble bot">✨ Poliram cijeli pitch - konzistentnost i tone…</div>
+      </div>
+      <div class="msg bot">
+        <div class="bubble bot">Gotovo. Pregledaj slajdove i exportaj kad si spreman.</div>
+      </div>
+    </div>
+
+    <div class="chat-input">
+      <div class="fake-input">Piši prirodno - ako nešto nije jasno, pitaj…</div>
+      <div class="fake-input-footer">
+        <span class="hint">Shift+Enter za novi red</span>
+        <button class="send-btn">Pošalji →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDES SIDE -->
+  <div class="slides-side">
+    <div class="slides-header">
+      <div class="slides-header-left">
+        <span class="chip-tag">Deck preview</span>
+        <span style="font-size:11px;color:var(--muted);">4/4 slajdova</span>
+      </div>
+      <div class="slides-header-right">
+        <div class="theme-picker">
+          <span class="theme-picker-label">Tema:</span>
+          <button class="theme-btn active">Crimson</button>
+          <button class="theme-btn">Midnight</button>
+          <button class="theme-btn">Editorial</button>
+          <button class="theme-btn">Bold</button>
+        </div>
+        <button class="btn-ghost">⬇ PDF</button>
+        <button class="btn-ghost">⬇ PPTX</button>
+        <button class="btn-primary">✨ Poliraj pitch</button>
+      </div>
+    </div>
+
+    <div class="slide-wrap">
+      <div class="slide">
+        <div class="slide-tag">01 · Problem</div>
+        <div class="slide-content">
+          <div class="slide-headline">70% maturanata pada državnu maturu iz matematike.</div>
+          <div class="slide-subtext">Privatne instrukcije koštaju €25-40 po satu - za većinu obitelji nedostupno.</div>
+        </div>
+        <div class="slide-footer">
+          <span></span>
+          <span>1 / 4</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="slides-footer">
+      <button class="btn-ghost">← Prev</button>
+      <div class="dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn-ghost">↻ Regeneriraj</button>
+        <button class="btn-ghost">Next →</button>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+</body>
+</html>

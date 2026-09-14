@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="hr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sustav preporuka · FOIward AI Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --red: #d6092f;
+    --red-dark: #a90022;
+    --red-soft: #fbe5e9;
+    --ink: #080808;
+    --ink-2: #141414;
+    --muted: #5b5b5b;
+    --line: #e5ddd3;
+    --warm: #f6f2ec;
+    --paper: #fbf8f3;
+    --gold: #caa456;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", -apple-system, sans-serif;
+    background: var(--warm);
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  nav.appnav {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; padding: 16px 24px;
+    background: var(--ink); color: white;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    flex-shrink: 0;
+  }
+  .brand { font-size: 24px; font-weight: 900; letter-spacing: -0.02em; line-height: 1; }
+  .brand span { color: var(--red); }
+  .brand-caption { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.6); margin-left: 12px; font-family: "JetBrains Mono", monospace; }
+  .page-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--red); font-family: "JetBrains Mono", monospace; }
+
+  main {
+    flex: 1;
+    padding: 32px 24px;
+  }
+  .wrap { max-width: 900px; margin: 0 auto; }
+
+  h1.title { font-size: 32px; font-weight: 900; letter-spacing: -0.025em; margin-bottom: 8px; }
+  p.subtitle { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+
+  .search-box {
+    background: white;
+    border: 1px solid var(--line);
+    padding: 16px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  }
+  .search-input {
+    width: 100%;
+    font-size: 16px;
+    outline: none;
+    border: none;
+    min-height: 44px;
+    color: var(--ink);
+    line-height: 1.5;
+    resize: none;
+    font-family: inherit;
+  }
+  .search-footer {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line);
+  }
+  .search-hint { font-size: 11px; color: var(--muted); }
+  .search-btn { background: var(--red); color: white; border: none; padding: 8px 18px; font-weight: 700; font-size: 13px; }
+
+  .section-eyebrow {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+
+  .query-box {
+    font-size: 14px; font-weight: 500;
+    background: white; border: 1px solid var(--line);
+    padding: 12px 16px;
+    margin-bottom: 24px;
+  }
+
+  .answer-box {
+    background: white;
+    border: 1px solid var(--line);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .cite {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 22px; height: 22px;
+    background: var(--red-soft); color: var(--red-dark);
+    font-size: 11px; font-weight: 700; padding: 0 6px;
+    margin: 0 2px;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+  .cite:hover { background: var(--red); color: white; }
+
+  .sources-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 32px; }
+  .source-card {
+    background: white; border: 1px solid var(--line);
+    padding: 16px;
+    cursor: pointer;
+    transition: border-color 150ms, box-shadow 150ms;
+  }
+  .source-card:hover { border-color: var(--red); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+  .source-header { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; }
+  .source-id {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px; color: var(--red);
+  }
+  .source-category {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted);
+  }
+  .source-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .source-excerpt { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  .back-link { font-size: 13px; color: var(--muted); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<nav class="appnav">
+  <div style="display:flex;align-items:baseline;gap:12px;">
+    <span class="brand"><span>FOI</span>ward</span>
+    <span class="brand-caption">AI Lab</span>
+  </div>
+  <div class="page-label">Sustav preporuka</div>
+</nav>
+
+<main>
+  <div class="wrap">
+    <h1 class="title">Repozitorij predinkubacije</h1>
+    <p class="subtitle">Postavi pitanje na hrvatskom. Pretražujem 15 dokumenata iz FOI predinkubacije i sintetiziram odgovor s izvorima.</p>
+
+    <div class="search-box">
+      <div class="search-input">Kako da validiram ideju prije nego što napišem liniju koda?</div>
+      <div class="search-footer">
+        <span class="search-hint">Enter za pretragu · Shift+Enter za novi red</span>
+        <button class="search-btn">Pretraži →</button>
+      </div>
+    </div>
+
+    <div class="section-eyebrow" style="color:var(--muted);">Upit:</div>
+    <div class="query-box">Kako da validiram ideju prije nego što napišem liniju koda?</div>
+
+    <div class="section-eyebrow">Odgovor</div>
+    <div class="answer-box">
+      Prije pisanja koda, prvo provjeri postoji li stvarno bolan problem koji rješavaš,
+      jer većina startupa propadne jer grade rješenje za nepostojeći problem
+      <span class="cite">1</span>. Sljedeći korak je customer discovery - strukturirani
+      razgovori s potencijalnim korisnicima (30 razgovora u 3 tjedna) kako bi
+      potvrdio da problem stvarno postoji i tko ga osjeća najviše
+      <span class="cite">2</span>. Fokusiraj se na postizanje Problem-Solution Fita
+      s 5-10 stvarnih korisnika prije nego što razmišljaš o Product-Market Fitu ili
+      raising-u novca <span class="cite">3</span>. Tek nakon što potvrdiš da
+      korisnici imaju problem, izradi MVP koji je najmanja verzija proizvoda koja
+      omogućuje korisniku da obavi ključni posao - ne demo, već nešto što stranci
+      mogu koristiti do kraja <span class="cite">4</span>.
+    </div>
+
+    <div class="section-eyebrow">Izvori (4)</div>
+    <div class="sources-list">
+      <div class="source-card">
+        <div class="source-header">
+          <span class="source-id">[kako-pronaci-startup-problem]</span>
+          <span class="source-category">Ideacija</span>
+        </div>
+        <div class="source-title">Kako pronaći dobar startup problem</div>
+        <div class="source-excerpt">Većina propalih startupa gradi rješenje za problem koji ne postoji ili nije bolan. Vodič kroz to gdje tražiti dobre probleme.</div>
+      </div>
+      <div class="source-card">
+        <div class="source-header">
+          <span class="source-id">[customer-discovery-razgovori]</span>
+          <span class="source-category">Validacija</span>
+        </div>
+        <div class="source-title">Customer discovery: 30 razgovora u 3 tjedna</div>
+        <div class="source-excerpt">Kako strukturirati razgovore s potencijalnim korisnicima. Popis pitanja koja ne smiješ postaviti.</div>
+      </div>
+      <div class="source-card">
+        <div class="source-header">
+          <span class="source-id">[problem-solution-fit-vs-pmf]</span>
+          <span class="source-category">Validacija</span>
+        </div>
+        <div class="source-title">Problem-Solution Fit vs Product-Market Fit</div>
+        <div class="source-excerpt">Dvije potpuno različite prekretnice. Prva: problem stvarno postoji. Druga: tvoje rješenje zaista pobjeđuje na tržištu.</div>
+      </div>
+      <div class="source-card">
+        <div class="source-header">
+          <span class="source-id">[mvp-minimum-viable-product]</span>
+          <span class="source-category">Validacija</span>
+        </div>
+        <div class="source-title">MVP: što stvarno znači i kako ga ne zeznuti</div>
+        <div class="source-excerpt">Većina "MVP-ova" su ili premali (ne rješavaju problem) ili preveliki (troše mjesece). Kako pogoditi pravu mjeru.</div>
+      </div>
+    </div>
+
+    <a href="#" class="back-link">← Nova pretraga</a>
+  </div>
+</main>
+
+</body>
+</html>
